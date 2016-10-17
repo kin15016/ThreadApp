@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">ThreadApp</string>
+    <string name="bt_create">Create</string>
+    <string name="bt_load">Load</string>
+    <string name="bt_clear">Clear</string>
 </resources>
