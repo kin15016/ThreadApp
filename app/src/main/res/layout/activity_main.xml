@@ -17,7 +17,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/pbNumbers"/>
+        android:id="@+id/pbFileIO"
+        android:indeterminate="false"/>
 
     <Button
         android:text="@string/bt_load"
