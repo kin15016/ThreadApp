@@ -12,46 +12,47 @@
     tools:context="com.example.threadapp.MainActivity">
 
     <ProgressBar
+        android:id="@+id/pbFileIO"
         style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/pbFileIO"
-        android:indeterminate="false"/>
+        android:indeterminate="false"
+        />
 
     <Button
-        android:text="@string/bt_load"
+        android:id="@+id/btLoad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btLoad"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:onClick="loadFile"/>
+        android:onClick="loadFile"
+        android:text="@string/bt_load"/>
 
     <Button
-        android:text="@string/bt_clear"
+        android:id="@+id/btClear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btClear"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:onClick="clearFile"/>
+        android:onClick="clearFile"
+        android:text="@string/bt_clear"/>
 
     <Button
-        android:text="@string/bt_create"
+        android:id="@+id/btCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btCreate"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:onClick="createFile"/>
+        android:onClick="createFile"
+        android:text="@string/bt_create"/>
 
     <ListView
+        android:id="@+id/lvNumbers"
+        style="@android:style/Widget.Material.ListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/btCreate"
-        android:layout_centerHorizontal="true"
-        style="@android:style/Widget.Material.ListView"
-        android:id="@+id/lvNumbers"/>
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

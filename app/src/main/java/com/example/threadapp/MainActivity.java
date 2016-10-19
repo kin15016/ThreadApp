@@ -22,8 +22,65 @@ public class MainActivity extends AppCompatActivity {
   private static final String LOG_TAG = "MainActivity";
   private static final String FILENAME = "numbers.txt";
 
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+  }
+
+  /**
+   * Create button onClick handler.
+   * Creates the numbers.txt file, with 1..10, one number per line.
+   *
+   * @param view the Button
+   */
+  public void createFile(View view) {
+    // start the background file creation task
+    CreateFileTask task = new CreateFileTask();
+    task.execute();
+  }
+
+  /**
+   * Load button onClick handler.
+   * Loads the numbers.txt file and populates a ListView with each number on a separate line.
+   *
+   * @param view the Button
+   */
+  public void loadFile(View view) {
+    // start the background file loading task
+    LoadFileTask task = new LoadFileTask();
+    task.execute();
+  }
+
+  /**
+   * Clear button onClick handler.
+   * Clears the ListView containing the numbers list.
+   *
+   * @param view the Button
+   */
+  public void clearFile(View view) {
+    // clear the displayed list of numbers
+    ListView lvNumbers = (ListView) findViewById(R.id.lvNumbers);
+    ArrayAdapter aaNumbers = (ArrayAdapter) lvNumbers.getAdapter();
+    if (aaNumbers != null) {
+      aaNumbers.clear();
+      aaNumbers.notifyDataSetChanged();
+    }
+
+    // clear progress bar
+    ProgressBar pbFileIO = (ProgressBar) findViewById(R.id.pbFileIO);
+    pbFileIO.setProgress(0);
+  }
+
   /** Create the numbers.txt file in the background. */
   private class CreateFileTask extends AsyncTask<Void, Integer, Void> {
+    @Override
+    protected void onPreExecute() {
+      // clear progress bar
+      ProgressBar pbFileIO = (ProgressBar) findViewById(R.id.pbFileIO);
+      pbFileIO.setProgress(0);
+    }
+
     @Override
     protected Void doInBackground(Void... params) {
       // create a file with the numbers 1..10, each on its own line.
@@ -50,14 +107,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPostExecute(Void result)
-    {
-      // clear progress bar
-      ProgressBar pbFileIO = (ProgressBar)findViewById(R.id.pbFileIO);
-      pbFileIO.setProgress(0);
-    }
-
-    @Override
     protected void onProgressUpdate(Integer... progress) {
       // update progress bar
       ProgressBar pbFileIO = (ProgressBar)findViewById(R.id.pbFileIO);
@@ -65,8 +114,15 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
-  /** Loads the numbers.txt file in the background. */
+  /** Load the numbers.txt file in the background. */
   private class LoadFileTask extends AsyncTask<Void, Integer, List<String>> {
+    @Override
+    protected void onPreExecute() {
+      // clear progress bar
+      ProgressBar pbFileIO = (ProgressBar) findViewById(R.id.pbFileIO);
+      pbFileIO.setProgress(0);
+    }
+
     @Override
     protected List<String> doInBackground(Void... params) {
       // load the file of numbers, line-by-line, into an array.
@@ -107,10 +163,6 @@ public class MainActivity extends AppCompatActivity {
           android.R.layout.simple_list_item_1, list);
       ListView lvNumbers = (ListView)findViewById(R.id.lvNumbers);
       lvNumbers.setAdapter(aaNumbers);
-
-      // clear progress bar
-      ProgressBar pbFileIO = (ProgressBar)findViewById(R.id.pbFileIO);
-      pbFileIO.setProgress(0);
     }
 
     @Override
@@ -118,34 +170,6 @@ public class MainActivity extends AppCompatActivity {
       // update the progress bar
       ProgressBar pbFileIO = (ProgressBar)findViewById(R.id.pbFileIO);
       pbFileIO.setProgress(progress[0]);
-    }
-  }
-
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-  }
-
-  public void createFile(View view) {
-    // start the background file creation task
-    CreateFileTask task = new CreateFileTask();
-    task.execute();
-  }
-
-  public void loadFile(View view) {
-    // start the background file loading task
-    LoadFileTask task = new LoadFileTask();
-    task.execute();
-  }
-
-  public void clearFile(View view) {
-    // clear the displayed list of numbers
-    ListView lvNumbers = (ListView)findViewById(R.id.lvNumbers);
-    ArrayAdapter aaNumbers = (ArrayAdapter)lvNumbers.getAdapter();
-    if (aaNumbers != null) {
-      aaNumbers.clear();
-      aaNumbers.notifyDataSetChanged();
     }
   }
 }
